@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class Vista extends JFrame {
 
@@ -104,27 +105,19 @@ public class Vista extends JFrame {
 		table = new JTable();
 		
 		table_1 = new JTable();
+		table_1.setBackground(Color.LIGHT_GRAY);
 		
 		JLabel lblSocios = new JLabel("Socios");
 		lblSocios.setFont(new Font("Tahoma", Font.BOLD, 21));
+		
+		JLabel lblDarDeAlta = new JLabel("Dar de alta a nuevo socio: ");
+		lblDarDeAlta.setBackground(Color.RED);
+		lblDarDeAlta.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 43));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(263)
-					.addComponent(btnDarDeAlta)
-					.addContainerGap(330, Short.MAX_VALUE))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(43)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(table_1, GroupLayout.PREFERRED_SIZE, 549, GroupLayout.PREFERRED_SIZE)
-						.addComponent(table, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(86, Short.MAX_VALUE))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-							.addGap(81)
-							.addComponent(lblSocios, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
 						.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
@@ -153,11 +146,30 @@ public class Vista extends JFrame {
 							.addGap(74)
 							.addComponent(lblGetDni, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblDarDeAlta)
+					.addContainerGap(88, Short.MAX_VALUE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(235)
+					.addComponent(btnDarDeAlta)
+					.addContainerGap(358, Short.MAX_VALUE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(43)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblSocios, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(table, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(table_1, GroupLayout.PREFERRED_SIZE, 549, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(68, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(78)
+					.addGap(27)
+					.addComponent(lblDarDeAlta)
+					.addGap(37)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNombre)
 						.addComponent(lblApellido)
@@ -171,18 +183,18 @@ public class Vista extends JFrame {
 						.addComponent(lblGetPoblacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblGetTelefono, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblGetDni, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(btnDarDeAlta)
+					.addGap(16)
+					.addComponent(lblSocios, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(38)
-							.addComponent(btnDarDeAlta)
-							.addGap(48)
+							.addGap(20)
 							.addComponent(table, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(77)
-							.addComponent(lblSocios, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(table_1, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(34, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(table_1, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(57, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		
