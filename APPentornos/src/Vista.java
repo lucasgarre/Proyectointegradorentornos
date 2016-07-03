@@ -39,7 +39,7 @@ public class Vista extends JFrame {
 	private JPanel panel;
 	private JTextField lblGetNombre;
 	private JTextField lblGetApellido;
-	private JTextField lblGetPoblacion;
+	private JTextField lblGetId;
 	private JTextField lblGetTelefono;
 	private JTextField lblGetDni;
 	//private JTable table;
@@ -54,6 +54,8 @@ public class Vista extends JFrame {
 	private JTextField getfecha;
 	private JTextField getsocio;
 	private DefaultTableModel dtm1;
+	private JTextField txtTipoid;
+	private JTextField txtReserva;
 
 
 
@@ -110,7 +112,7 @@ public class Vista extends JFrame {
 		
 		JLabel lblApellido = new JLabel("Apellido:");
 		
-		JLabel lblPoblacin = new JLabel("Poblaci\u00F3n: ");
+		JLabel lblId = new JLabel("ID Socio:");
 		
 		JLabel lblTelfono = new JLabel("Tel\u00E9fono:");
 		
@@ -122,8 +124,8 @@ public class Vista extends JFrame {
 		lblGetApellido = new JTextField();
 		lblGetApellido.setColumns(10);
 		
-		lblGetPoblacion = new JTextField();
-		lblGetPoblacion.setColumns(10);
+		lblGetId = new JTextField();
+		lblGetId.setColumns(10);
 		
 		lblGetTelefono = new JTextField();
 		lblGetTelefono.setColumns(10);
@@ -138,7 +140,7 @@ public class Vista extends JFrame {
 		table = new JTable();
 		dtm = new DefaultTableModel(new Object[][] {
 
-		}, new String[] { "Nombre", "Apellidos", "Poblacion", "Telefono", "Dni" });
+		}, new String[] { "Nombre", "Apellidos", "Nº Socio", "Telefono", "Dni",  });
 		
 		table.setModel(dtm);
 		scrollPane_socios.setViewportView(table);	
@@ -151,11 +153,17 @@ public class Vista extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			String nombre	= lblGetNombre.getText();// Recogemos valores de los campos de texto al igual que el Scanner
 			String apellido = lblGetApellido.getText();
-			String poblacion = lblGetPoblacion.getText();
+			String numsocio = lblGetId.getText();
 			String telefono = lblGetTelefono.getText();
 			String dni = lblGetDni.getText();
-			Object [] fila = {nombre,apellido,poblacion,telefono,dni};
+			Object [] fila = {nombre,apellido,numsocio,telefono,dni};
 			dtm.addRow(fila);
+			miMod.Insertarsocio(nombre, apellido, Integer.parseInt( numsocio) , dni, Integer.parseInt(telefono));
+		
+			
+			
+		//int numsocio1=	Integer.valueOf("").parseInt(numsocio);
+		//	miMod.AgregarSocio( numsocio1, apellido,  numsocio,  telefono,  dni);
 
 			
 		}
@@ -200,11 +208,11 @@ public class Vista extends JFrame {
 					.addGap(53)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblGetPoblacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblGetId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(38)
 							.addComponent(lblGetTelefono, 0, 0, Short.MAX_VALUE))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(lblPoblacin)
+							.addComponent(lblId)
 							.addGap(85)
 							.addComponent(lblTelfono)))
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
@@ -213,13 +221,15 @@ public class Vista extends JFrame {
 							.addComponent(lblDni, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 							.addGap(115))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(74)
+							.addGap(45)
 							.addComponent(lblGetDni, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())))
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(235)
 					.addComponent(btnDarDeAlta)
-					.addContainerGap(358, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(btneliminarsocio)
+					.addContainerGap(245, Short.MAX_VALUE))
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(161)
 					.addComponent(lblDarDeAlta)
@@ -227,176 +237,46 @@ public class Vista extends JFrame {
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(43)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-							.addComponent(table_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblSocios, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btneliminarsocio)
-								.addComponent(scrollPane_socios, GroupLayout.PREFERRED_SIZE, 556, GroupLayout.PREFERRED_SIZE))
-							.addContainerGap())))
+						.addComponent(table_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSocios, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane_socios, GroupLayout.PREFERRED_SIZE, 556, GroupLayout.PREFERRED_SIZE))
+					.addGap(79))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap(28, Short.MAX_VALUE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addComponent(lblDarDeAlta)
 					.addGap(36)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNombre)
 						.addComponent(lblApellido)
 						.addComponent(lblDni)
-						.addComponent(lblPoblacin)
+						.addComponent(lblId)
 						.addComponent(lblTelfono))
 					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblGetNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblGetApellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblGetPoblacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblGetId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblGetTelefono, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblGetDni, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addComponent(btnDarDeAlta)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnDarDeAlta)
+						.addComponent(btneliminarsocio))
 					.addGap(16)
 					.addComponent(lblSocios, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
 					.addGap(20)
 					.addComponent(table_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(15)
-					.addComponent(btneliminarsocio)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(44)
 					.addComponent(scrollPane_socios, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
 					.addGap(33))
 		);
 		panel.setLayout(gl_panel);
-		
-		JPanel boxpista = new JPanel();
-		boxpista.setBackground(SystemColor.activeCaption);
-		tabbedPane.addTab("Reserva", null, boxpista, null);
-		
-		JLabel lblNuestrasPistas = new JLabel("Reserve una pista:");
-		lblNuestrasPistas.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 25));
-		
-		JScrollPane scrollPanereserva = new JScrollPane();
-		
-		JLabel lblNPista = new JLabel("N\u00BA Pista:");
-		
-		JLabel lblTipoDePista = new JLabel("Tipo de pista:");
-		
-		JLabel lblFechaReserva = new JLabel("Fecha reserva:");
-		
-		JLabel lblNSocio = new JLabel("N\u00BA Socio:");
-		
-		getnpista = new JTextField();
-		getnpista.setColumns(10);
-		
-		getfecha = new JTextField();
-		getfecha.setColumns(10);
-		
-		getsocio = new JTextField();
-		getsocio.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Tenis", "Futbol 10", "Padel", "Baloncesto"}));
-		
-		table_1 = new JTable();
 		dtm1 = new DefaultTableModel(new Object[][] {
 
-		}, new String[] { "Nº", "Tipo", "Nº Socio", "Fecha" });
-		
-		table_1.setModel(dtm1);
-		scrollPanereserva.setViewportView(table_1);	
-		
-		JButton btnReservar = new JButton("Reservar");
-		btnReservar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String pista	= getnpista.getText();// Recogemos valores de los campos de texto al igual que el Scanner
-				String fecha = getfecha.getText();
-				String socio = getsocio.getText();
-				String tipo = (String)comboBox.getSelectedItem();
-				Object [] fila = {pista,tipo,socio,fecha };
-				dtm1.addRow(fila);
-			}
-		});
-		
-		JButton btnCancelarReserva = new JButton("Cancelar Reserva");
-		btnCancelarReserva.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dtm1.removeRow(table_1.getSelectedRow());
-
-			}
-		});
-		
-
-		//table = new JTable();
-		GroupLayout gl_boxpista = new GroupLayout(boxpista);
-		gl_boxpista.setHorizontalGroup(
-			gl_boxpista.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_boxpista.createSequentialGroup()
-					.addGap(42)
-					.addComponent(scrollPanereserva, GroupLayout.PREFERRED_SIZE, 581, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(55, Short.MAX_VALUE))
-				.addGroup(gl_boxpista.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_boxpista.createSequentialGroup()
-							.addComponent(lblNPista)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(getnpista, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_boxpista.createSequentialGroup()
-							.addComponent(lblTipoDePista)
-							.addGap(18)
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGap(95)
-					.addGroup(gl_boxpista.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNSocio)
-						.addComponent(lblFechaReserva))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
-						.addComponent(getfecha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(getsocio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(244, Short.MAX_VALUE))
-				.addGroup(gl_boxpista.createSequentialGroup()
-					.addContainerGap(214, Short.MAX_VALUE)
-					.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_boxpista.createSequentialGroup()
-							.addComponent(btnReservar)
-							.addGap(69)
-							.addComponent(btnCancelarReserva))
-						.addComponent(lblNuestrasPistas, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE))
-					.addGap(205))
-		);
-		gl_boxpista.setVerticalGroup(
-			gl_boxpista.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_boxpista.createSequentialGroup()
-					.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_boxpista.createSequentialGroup()
-							.addGap(95)
-							.addGroup(gl_boxpista.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblNPista)
-								.addComponent(getnpista, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(27)
-							.addGroup(gl_boxpista.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblTipoDePista)
-								.addComponent(lblNSocio)
-								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(getsocio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_boxpista.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblNuestrasPistas, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_boxpista.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblFechaReserva)
-								.addComponent(getfecha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addGap(44)
-					.addGroup(gl_boxpista.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnReservar)
-						.addComponent(btnCancelarReserva))
-					.addGap(31)
-					.addComponent(scrollPanereserva, GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		boxpista.setLayout(gl_boxpista);
+		}, new String[] { "Nº", "Tipo", "Nº Socio", "Fecha Reserva", "ID Tipo Pista", "Hora Reserva" });
 		
 		panel_2 = new JPanel();
 		panel_2.setBackground(SystemColor.activeCaption);
@@ -428,6 +308,168 @@ public class Vista extends JFrame {
 					.addGap(33))
 		);
 		panel_2.setLayout(gl_panel_2);
+		
+		JPanel boxpista = new JPanel();
+		boxpista.setBackground(SystemColor.activeCaption);
+		tabbedPane.addTab("Reserva", null, boxpista, null);
+		
+		JLabel lblNuestrasPistas = new JLabel("Reserve una pista:");
+		lblNuestrasPistas.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 25));
+		
+		JScrollPane scrollPanereserva = new JScrollPane();
+		
+		JLabel lblNPista = new JLabel("N\u00BA Pista:");
+		
+		JLabel lblTipoDePista = new JLabel("Tipo de pista:");
+		
+		JLabel lblFechaReserva = new JLabel("Fecha reserva:");
+		
+		JLabel lblNSocio = new JLabel("N\u00BA Socio:");
+		JLabel lblIdTipoPista = new JLabel("ID Tipo pista:");
+
+		
+		getnpista = new JTextField();
+		getnpista.setColumns(10);
+		
+		getfecha = new JTextField();
+		getfecha.setColumns(10);
+		
+		getsocio = new JTextField();
+		getsocio.setColumns(10);
+		
+		txtTipoid = new JTextField();
+		txtTipoid.setColumns(10);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Tenis", "Futbol 10", "Padel", "Baloncesto"}));
+		
+		table_1 = new JTable();
+		
+		table_1.setModel(dtm1);
+		scrollPanereserva.setViewportView(table_1);	
+		
+		JButton btnReservar = new JButton("Reservar");
+		btnReservar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String pista	= getnpista.getText();// Recogemos valores de los campos de texto al igual que el Scanner
+				String fecha = getfecha.getText();
+				String Tipoid = txtTipoid.getText();
+				String socio = getsocio.getText();
+				String tipo = (String)comboBox.getSelectedItem();
+				String lblHoraReserva= txtReserva.getText();
+				//String Tipoid = txtTipoid.getText();
+				Object [] fila = {pista,tipo,socio,fecha, Tipoid, lblHoraReserva };
+				dtm1.addRow(fila);
+			}
+		});
+		
+		JButton btnCancelarReserva = new JButton("Cancelar Reserva");
+		btnCancelarReserva.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dtm1.removeRow(table_1.getSelectedRow());
+
+			}
+		});
+		
+		JLabel lblHoraReserva = new JLabel("Hora Reserva:");
+		
+		txtReserva = new JTextField();
+		txtReserva.setColumns(10);
+		
+	
+		
+
+		//table = new JTable();
+		GroupLayout gl_boxpista = new GroupLayout(boxpista);
+		gl_boxpista.setHorizontalGroup(
+			gl_boxpista.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_boxpista.createSequentialGroup()
+					.addGap(42)
+					.addComponent(scrollPanereserva, GroupLayout.PREFERRED_SIZE, 581, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(55, Short.MAX_VALUE))
+				.addGroup(gl_boxpista.createSequentialGroup()
+					.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_boxpista.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblTipoDePista)
+								.addComponent(lblNPista))
+							.addGap(18)
+							.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
+								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(getnpista, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_boxpista.createSequentialGroup()
+							.addGap(131)
+							.addComponent(btnReservar)))
+					.addGap(24)
+					.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_boxpista.createSequentialGroup()
+							.addComponent(lblFechaReserva)
+							.addGap(220))
+						.addGroup(gl_boxpista.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblNuestrasPistas, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_boxpista.createSequentialGroup()
+									.addGap(33)
+									.addComponent(lblNSocio)
+									.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_boxpista.createSequentialGroup()
+											.addGap(69)
+											.addComponent(btnCancelarReserva))
+										.addGroup(gl_boxpista.createSequentialGroup()
+											.addGap(18)
+											.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_boxpista.createSequentialGroup()
+													.addComponent(getfecha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+													.addComponent(lblHoraReserva))
+												.addGroup(gl_boxpista.createSequentialGroup()
+													.addComponent(getsocio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+													.addComponent(lblIdTipoPista)
+													.addGap(14)))))))))
+					.addGap(18)
+					.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtReserva, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtTipoid, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(57, Short.MAX_VALUE))
+		);
+		gl_boxpista.setVerticalGroup(
+			gl_boxpista.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_boxpista.createSequentialGroup()
+					.addGroup(gl_boxpista.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_boxpista.createSequentialGroup()
+							.addGap(95)
+							.addGroup(gl_boxpista.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNPista)
+								.addComponent(getnpista, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(27)
+							.addGroup(gl_boxpista.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblTipoDePista)
+								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNSocio)
+								.addComponent(getsocio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblIdTipoPista)
+								.addComponent(txtTipoid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_boxpista.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblNuestrasPistas, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_boxpista.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblFechaReserva)
+								.addComponent(getfecha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblHoraReserva)
+								.addComponent(txtReserva, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+					.addGap(44)
+					.addGroup(gl_boxpista.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCancelarReserva)
+						.addComponent(btnReservar))
+					.addGap(31)
+					.addComponent(scrollPanereserva, GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		boxpista.setLayout(gl_boxpista);
 		contentPane.setLayout(gl_contentPane);
 	}
 	public void setMiMod(Modelo miMod) {
