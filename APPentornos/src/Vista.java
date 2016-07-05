@@ -56,6 +56,8 @@ public class Vista extends JFrame {
 	private DefaultTableModel dtm1;
 	private JTextField txtTipoid;
 	private JTextField txtReserva;
+	private JTextField txtpista;
+	private JTable table_2;
 
 
 
@@ -105,7 +107,7 @@ public class Vista extends JFrame {
 		panel = new JPanel();
 		panel.setBackground(SystemColor.activeCaption);
 		panel.setForeground(Color.GRAY);
-		tabbedPane.addTab("Alta socios", null, panel, null);
+		tabbedPane.addTab("Socios", null, panel, null);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		
@@ -140,7 +142,7 @@ public class Vista extends JFrame {
 		table = new JTable();
 		dtm = new DefaultTableModel(new Object[][] {
 
-		}, new String[] { "Nombre", "Apellidos", "Nº Socio", "Telefono", "Dni",  });
+		}, new String[] { "Nombre", "Apellidos", "numsocio", "Telefono", "Dni",  });
 		
 		table.setModel(dtm);
 		scrollPane_socios.setViewportView(table);	
@@ -188,6 +190,36 @@ public class Vista extends JFrame {
 		btneliminarsocio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dtm.removeRow(table.getSelectedRow());
+				miMod.BorrarSocio( lblGetId.getText());
+				
+			}
+		});
+		
+		JButton btnConsultar = new JButton("Consultar Socios");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {	
+				String [][]socios =miMod.ObtenerSocios("SELECT * FROM appfinal.SOCIOS");
+				//String [] socios = miMod.ObtenerSocios("SELECT * FROM appfinal.SOCIOS");
+				
+				for (int i=0; i<socios.length;i++){  //recorrido de filas
+					
+					
+					String num_socio = socios[i][0];
+					String nombre = socios[i][1];
+					String ape = socios[i][2];
+					String dni = socios[i][3];
+					String tfno = socios[i][4];
+
+					Object [] fila = {nombre,ape,num_socio,tfno,dni};
+					
+					
+					//dtm.addRow(  socios[i] ); 
+					dtm.addRow(  fila );
+					
+				}
+
+
+				
 			}
 		});
 		
@@ -217,19 +249,13 @@ public class Vista extends JFrame {
 							.addComponent(lblTelfono)))
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
 							.addComponent(lblDni, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 							.addGap(115))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(45)
 							.addComponent(lblGetDni, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap())))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(235)
-					.addComponent(btnDarDeAlta)
-					.addGap(18)
-					.addComponent(btneliminarsocio)
-					.addContainerGap(245, Short.MAX_VALUE))
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(161)
 					.addComponent(lblDarDeAlta)
@@ -241,6 +267,14 @@ public class Vista extends JFrame {
 						.addComponent(lblSocios, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
 						.addComponent(scrollPane_socios, GroupLayout.PREFERRED_SIZE, 556, GroupLayout.PREFERRED_SIZE))
 					.addGap(79))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(235)
+					.addComponent(btnDarDeAlta)
+					.addGap(22)
+					.addComponent(btneliminarsocio)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnConsultar)
+					.addContainerGap(124, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
@@ -264,6 +298,7 @@ public class Vista extends JFrame {
 					.addGap(18)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnDarDeAlta)
+						.addComponent(btnConsultar)
 						.addComponent(btneliminarsocio))
 					.addGap(16)
 					.addComponent(lblSocios, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
@@ -283,30 +318,83 @@ public class Vista extends JFrame {
 		tabbedPane.addTab("Pistas", null, panel_2, null);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setToolTipText("\r\n");
 		
 		JLabel lblNuestrasPistas_1 = new JLabel("Nuestras Pistas: ");
 		lblNuestrasPistas_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 25));
+		
+		JLabel lblNPista_1 = new JLabel("N\u00BA Pista:");
+		
+		txtpista = new JTextField();
+		txtpista.setColumns(10);
+		
+		JLabel txtTipo = new JLabel("Tipo Pista:");
+		
+		JComboBox comboTipo = new JComboBox();
+		comboTipo.setModel(new DefaultComboBoxModel(new String[] {"", "Padel ", "Tenis", "Futbol 10", "Spinning", "Baloncest"}));
+		
+		JButton btnAadirPista = new JButton("A\u00F1adir Pista");
+		btnAadirPista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+		JButton btnEliminarPista = new JButton("Eliminar Pista");
+		
+		JButton btnConsultarPista = new JButton("Consultar Pista");
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(37)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 608, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(33, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
 					.addContainerGap(189, Short.MAX_VALUE)
 					.addComponent(lblNuestrasPistas_1, GroupLayout.PREFERRED_SIZE, 312, GroupLayout.PREFERRED_SIZE)
 					.addGap(177))
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addGap(37)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 608, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(33, Short.MAX_VALUE))
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblNPista_1))
+						.addComponent(txtpista, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(47)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtTipo)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addComponent(comboTipo, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnAadirPista)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnEliminarPista)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnConsultarPista)))
+					.addContainerGap(180, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
+			gl_panel_2.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_2.createSequentialGroup()
 					.addGap(35)
 					.addComponent(lblNuestrasPistas_1, GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+					.addGap(18)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNPista_1)
+						.addComponent(txtTipo))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 259, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtpista, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnAadirPista)
+						.addComponent(btnEliminarPista)
+						.addComponent(btnConsultarPista))
+					.addGap(80)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
 					.addGap(33))
 		);
+		
+		table_2 = new JTable();
+		scrollPane.setViewportView(table_2);
 		panel_2.setLayout(gl_panel_2);
 		
 		JPanel boxpista = new JPanel();
