@@ -82,7 +82,7 @@ public class Vista extends JFrame {
 	 */
 	public Vista() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Lucas\\Desktop\\Julio\\Entornos\\Proyecto Integrador\\Archivos\\Java\\Imagenes\\favicon.png"));
-		setTitle("Gesti\u00F3n Club deportivo Bluezone");
+		setTitle("Gesti\u00F3n Club deportivo Lucas Martinez");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 701, 445);
 		contentPane = new JPanel();
